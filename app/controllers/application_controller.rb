@@ -1,10 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :authorize
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :authenticate_user!
   protected
-  def authorize
-    unless User.find_by(id: session[:user_id])
-      redirect_to login_url, alert:"You trying to unauth acces?"
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :password, :password_confirmation, :email])
+    devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+      user_params.permit(:name, :password, :password_confirmation,:email)
+    end
+    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      user_params.permit(:name, :password, :password_confirmation,:email)
     end
   end
 end

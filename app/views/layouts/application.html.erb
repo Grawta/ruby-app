@@ -10,9 +10,15 @@
   </head>
 
   <body>
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-
+    <% if user_signed_in?%>
     <header class="navbar  navbar-inverse">
       <div class="navbar-class">
         <div class="container">
@@ -29,6 +35,7 @@
         </div>
       </div>
     </header>
+  <%end%>
     <%= yield %>
   </body>
 </html>

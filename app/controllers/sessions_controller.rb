@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authorize
+  skip_before_action :authenticate_user!
   def new
   end
 
@@ -13,7 +13,6 @@ class SessionsController < ApplicationController
       redirect_to login_url, alert:"Invalid User or Password"
     end
   end
-
   def destroy
     session[:user_id] = nil
     redirect_to login_url, alert:"Successfully destroy"
